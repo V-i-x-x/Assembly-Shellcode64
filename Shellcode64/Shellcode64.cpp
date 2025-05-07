@@ -2,12 +2,12 @@
 #include <Windows.h>
 using namespace std;
 
-extern "C" void Shellcode();
+extern "C" void helloworld();
 
 int main()
 {
-    cout << "Hello from CPP" << endl;
+    cout << "Hello World" << endl;
     getchar();
-    Shellcode();
+    helloworld();
     return 0;
 }
