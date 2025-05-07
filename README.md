@@ -56,4 +56,4 @@ And now you can compile & run the code
 
 If you want to follow a more technical in depth step by step of the assembly part this is a reference:
 
-https://g3tsyst3m.github.io/shellcoding/assembly/debugging/x64-Assembly-&-Shellcoding-101/
+https://g3tsyst3m.github.io/shellcoding/assembly/debugging/x64-Assembly-Shellcoding-101/
